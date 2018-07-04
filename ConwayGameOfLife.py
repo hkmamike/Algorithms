@@ -92,8 +92,6 @@ class Solution:
         
         return self.nextGen(newState, m-1, h, w)
     
-    
-    
     def conwayGame(self, initialState, n):
         if n == 0:
             return initialState
