@@ -8,29 +8,20 @@ class Solution:
         :rtype: List[List[int]]
         """
         
-        def flood(row, col, image, srcColor):
+        def flood(row, col, image, srcColor, newColor, visited):
             row = min( max(0, row), len(image)-1)
             col = min( max(0, col), len(image[0])-1)
             
-            if image[row][col] == srcColor:
-                image[row][col] = -1
-                flood(row-1, col, image, srcColor)
-                flood(row, col-1, image, srcColor)
-                flood(row+1, col, image, srcColor)
-                flood(row, col+1, image, srcColor)
+            if image[row][col] == srcColor and (row, col) not in visited:
+                image[row][col] = newColor
+                visited.add((row, col))
+                flood(row-1, col, image, srcColor, newColor, visited)
+                flood(row, col-1, image, srcColor, newColor, visited)
+                flood(row+1, col, image, srcColor, newColor, visited)
+                flood(row, col+1, image, srcColor, newColor, visited)
             
-        def replaceChanged(image, newColor):
-            H = len(image)
-            W = len(image[0])
-            
-            for r in range(H):
-                for c in range(W):
-                    if image[r][c] == -1:
-                        image[r][c] = newColor
-            
+        visited = set()
         srcColor = image[sr][sc]
-        flood(sr, sc, image, srcColor)
-        replaceChanged(image, newColor)
+        flood(sr, sc, image, srcColor, newColor, visited)
         
         return image
-        
