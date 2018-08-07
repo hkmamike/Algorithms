@@ -17,7 +17,6 @@ class Solution:
     def subsetsWithDup(self, nums):
         
         self.results = []
-        
         nums = sorted(nums)
         self.recurseHelper(nums, 0, [])
         return self.results
