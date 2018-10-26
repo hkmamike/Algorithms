@@ -4,21 +4,31 @@ class Solution:
         :type S: str
         :rtype: str
         """
-        S = list(S)
+        def swap(l, r, S):
+            S[l], S[r] = S[r], S[l]
+            
+        def getNextPair(left, right, S):
+            while left < len(S) and not S[left].isalpha():
+                left += 1
+            
+            while right >= 0 and not S[right].isalpha():
+                right -= 1
+                
+            return left, right
         
+        S = list(S)
         left = 0
         right = len(S)-1
         
         while left < right:
-            while S[left].isalpha() == False and left < right:
+            left, right = getNextPair(left, right, S)
+            if left >= right:
+                break
+            else:
+                swap(left, right, S)
                 left += 1
-            
-            while S[right].isalpha() == False and right > left:
                 right -= 1
             
-            S[left], S[right] = S[right], S[left]
-            left += 1
-            right -= 1
-        
-        return "".join(S)
+        return ''.join(S)
+
             
