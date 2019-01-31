@@ -6,35 +6,35 @@ class Solution:
         :type K: int
         :rtype: int
         """
-        edgesMap = {}
-        for entry in times:
-            if entry[0] in edgesMap:
-                edgesMap[entry[0]].append(tuple(entry))
-            else:
-                edgesMap[entry[0]] = [tuple(entry)]
-        
-        
-        reachedTimes = [[] for _ in range(N)]
-        edgesUsed = set()
-        
-        def traverse(node, time):
-            reachedTimes[node-1].append(time)
-            if node in edgesMap:
-                for entry in edgesMap[node]:
-                    if entry in edgesUsed and time + entry[2] > min(reachedTimes[entry[1]-1]):
-                        pass
-                    else:
-                        edgesUsed.add(entry)
-                        traverse(entry[1], time + entry[2])
-            
-        traverse(K, 0)
-        
-        for i, entry in enumerate(reachedTimes):
-            if len(entry) < 1:
-                return -1
-            else:
-                reachedTimes[i] = min(entry)
                 
-        return max(reachedTimes)
+        edgesMap = collections.defaultdict(list)
+        for t in times:
+            edgesMap[t[0]].append( (t[1], t[2]) )
+                
+        
+        reachedTimes = {node: float('inf') for node in range(1, N+1)}
+        visitedNodes = set([K])
+        reachedTimes[K] = 0
+        new = K
+        
+        for _ in range(N-1):
+            for target, distance in edgesMap[new]:
+                if target not in visitedNodes:
+                    reachedTimes[target] = min(reachedTimes[new] + distance, reachedTimes[target])
+            
+            minDistance = float('inf')
+            for i in range(1, N+1):
+                if i not in visitedNodes:
+                    if reachedTimes[i] < minDistance:
+                        new = i
+                        minDistance = reachedTimes[i]
+                        
+            visitedNodes.add(new)
+        
+        if max(reachedTimes.values()) != float('inf'):
+            return max(reachedTimes.values())
+        else:
+            print(reachedTimes.values())
+            return -1
         
             
