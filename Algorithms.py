@@ -6,7 +6,6 @@ def buildTrie(self, words):
         for c in word + "$":
             node = node.setdefault(c, {})
 
-
 ## sorting
 def radixSort(self, num):
     for i in range(32):
