@@ -6,6 +6,20 @@ def buildTrie(self, words):
         for c in word + "$":
             node = node.setdefault(c, {})
 
+## binarySearch
+def binarySearch(array, target):
+    L = 0
+    R = len(array) - 1
+    while L < R:
+        M = (L+R) // 2
+        if array[M] == target:
+            return M
+        elif array[M] < target:
+            L = M + 1
+        else:
+            R = M
+    return L
+
 ## sorting
 def radixSort(self, num):
     for i in range(32):
