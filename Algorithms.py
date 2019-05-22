@@ -1,3 +1,47 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+import time
+class Environment:
+  def solution(self, nums):
+    sumV = 0
+    for num in nums:
+      sumV += num
+    return sumV
+
+  def test(self, cases, functionToTest):
+      for i, case in enumerate(cases):
+          caseInput, expected = case
+          failed = functionToTest(caseInput) != expected
+          if failed:
+              print('Failed: test case {} of {} with:\nInput: {}\nReturned: {}\nExpected: {}'.format(i+1, len(cases), caseInput, functionToTest(caseInput), expected))
+              return 
+
+      print('Succeeded: All {} test cases passed'.format(len(cases)))
+      return
+
+cases = [
+    ([-2, -7], -9),
+    ([2, -2], 0) ]
+
+env = Environment()
+
+start = time.process_time()
+env.test(cases, env.solution)
+end = time.process_time()
+
+print('Running all {} test cases took {}ms.'.format(len(cases), round((end - start)*1000, 4)))
+
 ## trie
 def buildTrie(self, words):
     self.root = {}
@@ -5,6 +49,25 @@ def buildTrie(self, words):
         node = self.root
         for c in word + "$":
             node = node.setdefault(c, {})
+
+## edit distance without replacement
+def editDistance(w1, w2, allowance):
+    if len(w1) > len(w2):
+        w1, w2 = w2, w1
+    if len(w2) != len(w1) + allowance:
+        return False
+    
+    p1 = p2 = 0
+    while p1 < len(w1):
+        if w1[p1] == w2[p2]:
+            p1 += 1
+            p2 += 1
+        elif allowance == 0:
+            return False
+        else:
+            p2 += 1
+            allowance -= 1
+    return True
 
 ## binarySearch
 def binarySearch(array, target):
