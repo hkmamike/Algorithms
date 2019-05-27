@@ -42,6 +42,8 @@ end = time.process_time()
 
 print('Running all {} test cases took {}ms.'.format(len(cases), round((end - start)*1000, 4)))
 
+
+
 ## trie
 def buildTrie(self, words):
     self.root = {}
@@ -131,3 +133,33 @@ def mergeSort(self, nums: List[int]) -> List[int]:
     return nums
 
 ## shuffle
+def shuffle(nums):
+    n = len(nums)
+    for i in range(n):
+        rand = random.randrange(i,n-1)
+        nums[rand], nums[i] = nums[i], nums[rand]
+
+    return nums
+
+## divide
+ def divide(self, y, x):
+    positive = (y > 0) == (x > 0)
+    x = abs(x)
+    y = abs(y)
+    result = 0
+
+    while y >= x:
+        temp, i = x, 1
+        while y >= temp:
+            i <<= 1
+            temp <<= 1
+            
+        i >>= 1
+        temp >>= 1
+        y -= temp
+        result += i
+
+    if not positive:
+        result = - result
+        
+    return min(max(result, -2147483648), 2147483647)
