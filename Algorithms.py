@@ -7,43 +7,6 @@
 
 
 
-
-
-
-
-import time
-class Environment:
-  def solution(self, nums):
-    sumV = 0
-    for num in nums:
-      sumV += num
-    return sumV
-
-  def test(self, cases, functionToTest):
-      for i, case in enumerate(cases):
-          caseInput, expected = case
-          failed = functionToTest(caseInput) != expected
-          if failed:
-              print('Failed: test case {} of {} with:\nInput: {}\nReturned: {}\nExpected: {}'.format(i+1, len(cases), caseInput, functionToTest(caseInput), expected))
-              return 
-
-      print('Succeeded: All {} test cases passed'.format(len(cases)))
-      return
-
-cases = [
-    ([-2, -7], -9),
-    ([2, -2], 0) ]
-
-env = Environment()
-
-start = time.process_time()
-env.test(cases, env.solution)
-end = time.process_time()
-
-print('Running all {} test cases took {}ms.'.format(len(cases), round((end - start)*1000, 4)))
-
-
-
 ## trie
 def buildTrie(self, words):
     self.root = {}
@@ -163,3 +126,95 @@ def shuffle(nums):
         result = - result
         
     return min(max(result, -2147483648), 2147483647)
+
+## power
+def pow(self, x: float, n: int) -> float:
+    if n == 0:
+        return 1
+    
+    elif n < 0:
+        return 1 / self.myPow(x, -n)
+    
+    elif n % 2 == 1:
+        return x * self.myPow(x, n-1)
+
+    return self.myPow(x*x, n/2)
+
+## rotate matrix
+def rotate(self, matrix):
+        n = len(matrix)
+        for r in range(n):
+            for c in range(r+1, n):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+                
+        for i, row in enumerate(matrix):
+            matrix[i] = row[::-1]
+
+## next permutation, next lexicographical permutation
+def nextPermutation(self, nums: List[int]) -> None:
+    if len(nums) <= 1:
+        return
+    
+    def findPivot():
+        for i in range(len(nums)-2,-1,-1):
+            if nums[i] < nums[i+1]:
+                return i
+        return -1
+    
+    def findSwap(pivotIdx):
+        for i in range(len(nums)-1, pivotIdx, -1):
+            if nums[i] > nums[pivotIdx]:
+                return i
+    
+    # step 1, from the end, find the first drop, this is the pivot
+    pivotIdx = findPivot()
+    if pivotIdx == -1:
+        nums.reverse()
+        return
+    
+    # step 2, again from the end, find the first thing that is bigger than pivot
+    swapIdx = findSwap(pivotIdx)
+    
+    # step 3, swap pivot and the idx found in step 2
+    nums[swapIdx], nums[pivotIdx] = nums[pivotIdx], nums[swapIdx]
+    
+    # step 4, from the pivot idx, swap everything on the right
+    l = pivotIdx + 1
+    r = len(nums)-1
+
+    while l < r:
+        nums[l], nums[r] = nums[r], nums[l]
+        l += 1
+        r -= 1
+
+## testing
+import time
+class Environment:
+  def solution(self, nums):
+    sumV = 0
+    for num in nums:
+      sumV += num
+    return sumV
+
+  def test(self, cases, functionToTest):
+      for i, case in enumerate(cases):
+          caseInput, expected = case
+          failed = functionToTest(caseInput) != expected
+          if failed:
+              print('Failed: test case {} of {} with:\nInput: {}\nReturned: {}\nExpected: {}'.format(i+1, len(cases), caseInput, functionToTest(caseInput), expected))
+              return 
+
+      print('Succeeded: All {} test cases passed'.format(len(cases)))
+      return
+
+cases = [
+    ([-2, -7], -9),
+    ([2, -2], 0) ]
+
+env = Environment()
+
+start = time.process_time()
+env.test(cases, env.solution)
+end = time.process_time()
+
+print('Running all {} test cases took {}ms.'.format(len(cases), round((end - start)*1000, 4)))
