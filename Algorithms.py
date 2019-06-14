@@ -190,22 +190,26 @@ def nextPermutation(self, nums: List[int]) -> None:
 ## testing
 import time
 class Environment:
-  def solution(self, nums):
-    sumV = 0
-    for num in nums:
-      sumV += num
-    return sumV
 
-  def test(self, cases, functionToTest):
-      for i, case in enumerate(cases):
-          caseInput, expected = case
-          failed = functionToTest(caseInput) != expected
-          if failed:
-              print('Failed: test case {} of {} with:\nInput: {}\nReturned: {}\nExpected: {}'.format(i+1, len(cases), caseInput, functionToTest(caseInput), expected))
-              return 
+    def __init__(self):
+        self.someGlobalVar = 1
 
-      print('Succeeded: All {} test cases passed'.format(len(cases)))
-      return
+    def solution(self, nums):
+        sumV = 0
+        for num in nums:
+            sumV += num
+            return sumV
+
+    def test(self, cases, functionToTest):
+        for i, case in enumerate(cases):
+            caseInput, expected = case
+            failed = functionToTest(caseInput) != expected
+            if failed:
+                print('Failed: test case {} of {} with:\nInput: {}\nReturned: {}\nExpected: {}'.format(i+1, len(cases), caseInput, functionToTest(caseInput), expected))
+                return 
+
+        print('Succeeded: All {} test cases passed'.format(len(cases)))
+        return
 
 cases = [
     ([-2, -7], -9),
