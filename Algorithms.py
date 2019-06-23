@@ -105,7 +105,7 @@ def shuffle(nums):
     return nums
 
 ## divide
- def divide(self, y, x):
+def divide(self, y, x):
     positive = (y > 0) == (x > 0)
     x = abs(x)
     y = abs(y)
@@ -186,6 +186,37 @@ def nextPermutation(self, nums: List[int]) -> None:
         nums[l], nums[r] = nums[r], nums[l]
         l += 1
         r -= 1
+
+## union-find
+def find(node):
+	if rootMap[node] == -1:
+		Return node
+	rootMap[node] = find(rootMap[node])
+	return rootMap[node]
+
+def union(a, b):
+	rootA = find(a)
+	rootB = find(b)
+    if rootA < rootB:
+        rootMap[rootB] = rootA
+    elif rootB < rootA:
+        rootMap[rootA] = rootB
+
+rootMap = collections.defaultdict(lambda: -1)
+for a, b in pairs:
+	union(a, b)
+
+
+## linked list
+def reverseList(head):
+    pre = None
+    while head:
+        current = head
+        head = current.next
+        current.next = pre
+        pre = current
+    return pre
+
 
 ## testing
 import time
