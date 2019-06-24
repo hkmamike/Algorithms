@@ -190,7 +190,7 @@ def nextPermutation(self, nums: List[int]) -> None:
 ## union-find
 def find(node):
 	if rootMap[node] == -1:
-		Return node
+        Return node
 	rootMap[node] = find(rootMap[node])
 	return rootMap[node]
 
@@ -206,6 +206,36 @@ rootMap = collections.defaultdict(lambda: -1)
 for a, b in pairs:
 	union(a, b)
 
+## topological sort with cycle detection
+    def topologicalSort(self, numCourses, prerequisites):
+
+        prereqMap = collections.defaultdict(list)
+        for pair in prerequisites:
+            prereqMap[pair[0]].append(pair[1])
+        
+        def dfs(node, visited, order, pathSet):
+            pathSet.add(node)
+            
+            for neighbor in prereqMap[node]:
+                if neighbor in pathSet:
+                    self.loopFound = True
+                elif neighbor not in visited:
+                    dfs(neighbor, visited, order, pathSet)
+                    
+            order.append(node)
+            pathSet.remove(node)
+            visited.add(node)
+            
+        visited = set()
+        order = []
+        for i in range(numCourses):
+            if i not in visited:
+                self.loopFound = False
+                dfs(i, visited, order, set())
+                if self.loopFound:
+                    return []
+
+        return order
 
 ## linked list
 def reverseList(head):
