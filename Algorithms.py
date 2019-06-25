@@ -1,16 +1,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
 import time
 class Environment:
   def solution(self, nums):
@@ -22,6 +12,7 @@ class Environment:
   def test(self, cases, functionToTest):
       for i, case in enumerate(cases):
           caseInput, expected = case
+          print('...executing test case {} of {} with input: {}'.format(i+1, len(cases), caseInput))
           failed = functionToTest(caseInput) != expected
           if failed:
               print('Failed: test case {} of {} with:\nInput: {}\nReturned: {}\nExpected: {}'.format(i+1, len(cases), caseInput, functionToTest(caseInput), expected))
@@ -32,7 +23,8 @@ class Environment:
 
 cases = [
     ([-2, -7], -9),
-    ([2, -2], 0) ]
+    ([2, -2], 0),
+    ({}, 0) ]
 
 env = Environment()
 
@@ -83,6 +75,16 @@ def binarySearch(array, target):
             R = M
     return L
 
+## addBinary
+def addBinary(self, A, B):
+        res = []
+        carry = 0
+        while A or B or carry:
+            carry += (A or [0]).pop() + (B or [0]).pop()
+            res.append(carry & 1)
+            carry = carry >> 1
+        return res[::-1]
+
 ## sorting
 def radixSort(self, num):
     for i in range(32):
@@ -131,3 +133,51 @@ def mergeSort(self, nums: List[int]) -> List[int]:
     return nums
 
 ## shuffle
+
+
+## reorderList
+class Solution:
+    def reorderList(self, head: ListNode) -> None:
+
+        def split(head):
+            slow = fast = head
+            while fast and fast.next:
+                slow = slow.next
+                fast = fast.next.next
+                
+            middle = slow.next
+            slow.next = None
+            
+            return head, middle
+            
+        def reverse(head):
+            last = None
+            currentNode = head
+            
+            while currentNode:
+                nextNode = currentNode.next
+                currentNode.next = last
+                last = currentNode
+                currentNode = nextNode
+
+            return last
+        
+        def mergeLists(a, b):
+            head = tail = a
+            
+            a = a.next
+            while b:
+                tail.next = b
+                tail = tail.next
+                b = b.next
+                if a:
+                    a, b = b, a
+                    
+            return head
+        
+        if not head or not head.next:
+            return
+        
+        a, b = split(head)
+        b = reverse(b)
+        head = mergeLists(a, b)
