@@ -61,50 +61,70 @@ for a, b in pairs:
 	union(a, b)
 
 ## topological sort with cycle detection
-    def topologicalSort(self, numCourses, prerequisites):
+def topologicalSort(self, numCourses, prerequisites):
 
-        prereqMap = collections.defaultdict(list)
-        for pair in prerequisites:
-            prereqMap[pair[0]].append(pair[1])
+    prereqMap = collections.defaultdict(list)
+    for pair in prerequisites:
+        prereqMap[pair[0]].append(pair[1])
+    
+    def dfs(node, visited, order, pathSet):
+        pathSet.add(node)
         
-        def dfs(node, visited, order, pathSet):
-            pathSet.add(node)
-            
-            for neighbor in prereqMap[node]:
-                if neighbor in pathSet:
-                    self.loopFound = True
-                elif neighbor not in visited:
-                    dfs(neighbor, visited, order, pathSet)
-                    
-            order.append(node)
-            pathSet.remove(node)
-            visited.add(node)
-            
-        visited = set()
-        order = []
-        for i in range(numCourses):
-            if i not in visited:
-                self.loopFound = False
-                dfs(i, visited, order, set())
-                if self.loopFound:
-                    return []
+        for neighbor in prereqMap[node]:
+            if neighbor in pathSet:
+                self.loopFound = True
+            elif neighbor not in visited:
+                dfs(neighbor, visited, order, pathSet)
+                
+        order.append(node)
+        pathSet.remove(node)
+        visited.add(node)
+        
+    visited = set()
+    order = []
+    for i in range(numCourses):
+        if i not in visited:
+            self.loopFound = False
+            dfs(i, visited, order, set())
+            if self.loopFound:
+                return []
 
-        return order
+    return order
+
+## clone graph
+def cloneGraph(self, node: 'Node') -> 'Node':
+    if not node:
+        return None
+    
+    nodesMap = {}
+    nodesMap[node] = Node(node.val, [])
+    stack = [node]
+    
+    while stack:
+        item = stack.pop()
+        for neighbor in item.neighbors:
+            if neighbor not in nodesMap:
+                nodesMap[neighbor] = Node(neighbor.val, [])
+                stack.append(neighbor)
+                
+            nodesMap[item].neighbors.append(nodesMap[neighbor])
+        
+    return nodesMap[node]
 
 ## coin change:
-    def coinChange(self, coins, amount):
-        if amount == 0:
-            return 0
-        
-        dp = [amount+1] * (amount+1)
-        for i in range(1, amount+1):
-            for coin in coins:
-                if i == coin:
-                    dp[i] = 1  
-                elif i - coin > 0 and dp[i-coin] != amount + 1:
-                    dp[i] = min(dp[i], dp[i-coin] + 1)
-                    
-        return dp[amount] if dp[amount] != amount + 1 else -1
+def coinChange(self, coins, amount):
+    if amount == 0:
+        return 0
+    
+    dp = [amount+1] * (amount+1)
+    for i in range(1, amount+1):
+        for coin in coins:
+            if i == coin:
+                dp[i] = 1  
+            elif i - coin > 0 and dp[i-coin] != amount + 1:
+                dp[i] = min(dp[i], dp[i-coin] + 1)
+                
+    return dp[amount] if dp[amount] != amount + 1 else -1
 
 ## linked list
 def reverseList(head):
