@@ -1,12 +1,5 @@
 
 
-
-
-
-
-
-
-
 ## trie
 def buildTrie(self, words):
     self.root = {}
@@ -14,6 +7,114 @@ def buildTrie(self, words):
         node = self.root
         for c in word + "$":
             node = node.setdefault(c, {})
+
+## binarySearch
+def binarySearch(array, target):
+    L = 0
+    R = len(array) - 1
+    while L < R:
+        M = (L+R) // 2
+        if array[M] == target:
+            return M
+        elif array[M] < target:
+            L = M + 1
+        else:
+            R = M
+    return L
+
+## shuffle
+def shuffle(nums):
+    n = len(nums)
+    for i in range(n):
+        rand = random.randrange(i,n-1)
+        nums[rand], nums[i] = nums[i], nums[rand]
+
+    return nums
+
+## rotate matrix
+def rotate(self, matrix):
+        n = len(matrix)
+        for r in range(n):
+            for c in range(r+1, n):
+                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+                
+        for i, row in enumerate(matrix):
+            matrix[i] = row[::-1]
+
+## union-find
+def find(node):
+    if rootMap[node] == -1:
+        Return node
+	rootMap[node] = find(rootMap[node])
+	return rootMap[node]
+
+def union(a, b):
+	rootA = find(a)
+	rootB = find(b)
+    if rootA < rootB:
+        rootMap[rootB] = rootA
+    elif rootB < rootA:
+        rootMap[rootA] = rootB
+
+rootMap = collections.defaultdict(lambda: -1)
+for a, b in pairs:
+	union(a, b)
+
+## topological sort with cycle detection
+    def topologicalSort(self, numCourses, prerequisites):
+
+        prereqMap = collections.defaultdict(list)
+        for pair in prerequisites:
+            prereqMap[pair[0]].append(pair[1])
+        
+        def dfs(node, visited, order, pathSet):
+            pathSet.add(node)
+            
+            for neighbor in prereqMap[node]:
+                if neighbor in pathSet:
+                    self.loopFound = True
+                elif neighbor not in visited:
+                    dfs(neighbor, visited, order, pathSet)
+                    
+            order.append(node)
+            pathSet.remove(node)
+            visited.add(node)
+            
+        visited = set()
+        order = []
+        for i in range(numCourses):
+            if i not in visited:
+                self.loopFound = False
+                dfs(i, visited, order, set())
+                if self.loopFound:
+                    return []
+
+        return order
+
+## linked list
+def reverseList(head):
+    pre = None
+    while head:
+        current = head
+        head = current.next
+        current.next = pre
+        pre = current
+    return pre
+
+## count primes
+def countPrimes(self, n):
+    if n < 3:
+        return 0
+    
+    prime = [True] * n
+    prime[0] = prime[1] = False
+    
+    for i in range(2, int(n**0.5)+1):
+        if prime[i]:
+            for j in range(i*i, n, i):
+                prime[j] = False
+                
+    return sum(prime)
 
 ## edit distance without replacement
 def editDistance(w1, w2, allowance):
@@ -33,20 +134,6 @@ def editDistance(w1, w2, allowance):
             p2 += 1
             allowance -= 1
     return True
-
-## binarySearch
-def binarySearch(array, target):
-    L = 0
-    R = len(array) - 1
-    while L < R:
-        M = (L+R) // 2
-        if array[M] == target:
-            return M
-        elif array[M] < target:
-            L = M + 1
-        else:
-            R = M
-    return L
 
 ## addBinary
 def addBinary(self, A, B):
@@ -105,9 +192,6 @@ def mergeSort(self, nums: List[int]) -> List[int]:
             
     return nums
 
-## shuffle
-
-
 ## reorderList
 class Solution:
     def reorderList(self, head: ListNode) -> None:
@@ -154,13 +238,6 @@ class Solution:
         a, b = split(head)
         b = reverse(b)
         head = mergeLists(a, b)
-def shuffle(nums):
-    n = len(nums)
-    for i in range(n):
-        rand = random.randrange(i,n-1)
-        nums[rand], nums[i] = nums[i], nums[rand]
-
-    return nums
 
 ## divide
 def divide(self, y, x):
@@ -198,16 +275,6 @@ def pow(self, x: float, n: int) -> float:
 
     return self.myPow(x*x, n/2)
 
-## rotate matrix
-def rotate(self, matrix):
-        n = len(matrix)
-        for r in range(n):
-            for c in range(r+1, n):
-                matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
-                
-        for i, row in enumerate(matrix):
-            matrix[i] = row[::-1]
-
 ## next permutation, next lexicographical permutation
 def nextPermutation(self, nums: List[int]) -> None:
     if len(nums) <= 1:
@@ -244,67 +311,6 @@ def nextPermutation(self, nums: List[int]) -> None:
         nums[l], nums[r] = nums[r], nums[l]
         l += 1
         r -= 1
-
-## union-find
-def find(node):
-	if rootMap[node] == -1:
-        Return node
-	rootMap[node] = find(rootMap[node])
-	return rootMap[node]
-
-def union(a, b):
-	rootA = find(a)
-	rootB = find(b)
-    if rootA < rootB:
-        rootMap[rootB] = rootA
-    elif rootB < rootA:
-        rootMap[rootA] = rootB
-
-rootMap = collections.defaultdict(lambda: -1)
-for a, b in pairs:
-	union(a, b)
-
-## topological sort with cycle detection
-    def topologicalSort(self, numCourses, prerequisites):
-
-        prereqMap = collections.defaultdict(list)
-        for pair in prerequisites:
-            prereqMap[pair[0]].append(pair[1])
-        
-        def dfs(node, visited, order, pathSet):
-            pathSet.add(node)
-            
-            for neighbor in prereqMap[node]:
-                if neighbor in pathSet:
-                    self.loopFound = True
-                elif neighbor not in visited:
-                    dfs(neighbor, visited, order, pathSet)
-                    
-            order.append(node)
-            pathSet.remove(node)
-            visited.add(node)
-            
-        visited = set()
-        order = []
-        for i in range(numCourses):
-            if i not in visited:
-                self.loopFound = False
-                dfs(i, visited, order, set())
-                if self.loopFound:
-                    return []
-
-        return order
-
-## linked list
-def reverseList(head):
-    pre = None
-    while head:
-        current = head
-        head = current.next
-        current.next = pre
-        pre = current
-    return pre
-
 
 ## testing
 import time
