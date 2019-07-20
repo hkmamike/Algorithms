@@ -1,4 +1,8 @@
 
+dijkstra
+priority queue
+introduction to algorithms
+shortest path problems
 
 ## trie
 def buildTrie(self, words):
@@ -44,14 +48,14 @@ def rotate(self, matrix):
 ## union-find
 def find(node):
     if rootMap[node] == -1:
-        Return node
+        return node
 	rootMap[node] = find(rootMap[node])
 	return rootMap[node]
 
 def union(a, b):
 	rootA = find(a)
 	rootB = find(b)
-    if rootA < rootB:
+    if rootA <= rootB:
         rootMap[rootB] = rootA
     elif rootB < rootA:
         rootMap[rootA] = rootB
