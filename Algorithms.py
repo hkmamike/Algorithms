@@ -61,7 +61,7 @@ def union(a, b):
         rootMap[rootA] = rootB
 
 rootMap = collections.defaultdict(lambda: -1)
-for a, b in pairs:
+for a, b in edges:
 	union(a, b)
 
 ## topological sort with cycle detection
