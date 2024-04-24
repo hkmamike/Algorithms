@@ -1,3 +1,19 @@
+# Attempt 2: cleaner
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        posAndSpeed = []
+        for i in range(len(position)):
+            posAndSpeed.append((position[i], speed[i]))
+        posAndSpeed.sort()
+
+        expectedArrivalTimes = [(target - entry[0])/entry[1] for entry in posAndSpeed]
+        
+        for i in range(len(position)-2, -1, -1):
+            if expectedArrivalTimes[i] < expectedArrivalTimes[i+1]:
+                expectedArrivalTimes[i] = expectedArrivalTimes[i+1]
+
+        return len(set(expectedArrivalTimes))
+
 class Solution:
     def carFleet(self, target, position, speed):
         """
@@ -33,3 +49,4 @@ class Solution:
                 fleet += 1
                 
         return fleet
+
