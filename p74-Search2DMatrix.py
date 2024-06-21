@@ -1,3 +1,34 @@
+## Cleaner Solution
+class Solution:
+    def bSearchY(self, matrix, target):
+            up = 0
+            down = len(matrix)-1
+            while up < down:
+                mid = (down + up) // 2
+                if matrix[mid][0] <= target and matrix[mid][-1] >= target:
+                    return mid
+                elif matrix[mid][-1] < target:
+                    up = mid + 1
+                else:
+                    down = mid
+            return up
+    def bSearchX(self, matrix, target, Y):
+        L = 0
+        R = len(matrix[Y])-1
+        while L < R:
+            M = (L+R) // 2
+            if matrix[Y][M] == target:
+                return M
+            elif matrix[Y][M] < target:
+                L = M + 1
+            else:
+                R = M
+        return L
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        R = self.bSearchY(matrix, target)
+        C = self.bSearchX(matrix, target, R)
+        return target == matrix[R][C]
+
 class Solution:
     def searchMatrix(self, matrix, target):
         height = len(matrix)
