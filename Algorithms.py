@@ -27,6 +27,7 @@ def binarySearch(array, target):
     return L
 
 ## binarySearch General
+## reference: https://leetcode.com/problems/koko-eating-bananas/solutions/769702/python-clear-explanation-powerful-ultimate-binary-search-template-solved-many-problems/
 def binarySearch(array, target):
     def feasible(value) -> bool:
         # encode condition that matches desired result
