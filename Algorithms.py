@@ -12,7 +12,7 @@ def buildTrie(self, words):
         for c in word + "$":
             node = node.setdefault(c, {})
 
-## binarySearch
+## binarySearch with Exact Match
 def binarySearch(array, target):
     L = 0
     R = len(array) - 1
@@ -24,6 +24,23 @@ def binarySearch(array, target):
             L = M + 1
         else:
             R = M
+    return L
+
+## binarySearch General
+def binarySearch(array, target):
+    def feasible(value) -> bool:
+        # encode condition that matches desired result
+        pass
+
+    # include all elements
+    L, R = 0, len(array)
+
+    while L < R:
+        M = (L+R) // 2
+        if feasible(M)
+            R = M
+        else:
+            L = M + 1
     return L
 
 ## shuffle
