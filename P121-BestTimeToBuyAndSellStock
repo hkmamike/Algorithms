@@ -1,0 +1,8 @@
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxFromRight = [x for x in prices]
+        for i in range(len(prices)-2, -1, -1):
+            maxFromRight[i] = max(maxFromRight[i+1], prices[i])
+        
+        profits = [maxFromRight[i] - prices[i] for i in range(len(prices))]
+        return max(profits)
