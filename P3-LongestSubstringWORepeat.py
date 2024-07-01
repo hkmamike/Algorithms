@@ -1,3 +1,27 @@
+# sliding window solution
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+
+        sLength = len(s)
+        if sLength <= 1:
+            return sLength
+
+        L, R = 0, 1
+        charsSet = set()
+        charsSet.add(s[0])
+        maxLength = 0
+
+        while R < sLength:
+            if s[R] in charsSet:
+                charsSet.remove(s[L])
+                L += 1
+            else:
+                charsSet.add(s[R])
+                maxLength = max(maxLength, R - L + 1)
+                R += 1
+
+        return maxLength
+
 class Solution:
     def lengthOfLongestSubstring(self, s):
         """
