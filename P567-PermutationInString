@@ -1,0 +1,23 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        
+        s1Len, s2Len = len(s1), len(s2)
+        if s1Len > s2Len: return False
+
+        windowSet = collections.Counter()
+        for i in range(s1Len):
+            windowSet[s2[i]] += 1
+
+        s1Set = collections.Counter(s1)
+        L, R = 0, s1Len-1
+        while R < s2Len:
+            if (s1Set <= windowSet):
+                return True
+            else:
+                windowSet[s2[L]] -= 1
+                L += 1
+
+                R += 1
+                if R < s2Len:
+                    windowSet[s2[R]] += 1
+        return False
