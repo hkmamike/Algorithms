@@ -1,0 +1,19 @@
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        counter = collections.Counter()
+        L = 0
+        maxLength = 0
+        maxFrequency = 0
+
+        for R in range(len(s)):
+            counter[s[R]] += 1
+            maxFrequency = max(maxFrequency, counter[s[R]])
+
+            if maxLength < maxFrequency + k:
+                maxLength += 1
+            else:
+                counter[s[L]] -= 1
+                L += 1
+        return maxLength
+
+
