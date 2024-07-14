@@ -1,0 +1,19 @@
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        pNodes = []
+        qNodes = []
+
+        def dfs(nodesList, node, path):
+            nodesList.append(path)
+            if node:
+                nodesList.append(str(node.val))
+                dfs(nodesList, node.left, "L")
+                dfs(nodesList, node.right, "R")
+            else:
+                nodesList.append("N")
+        
+        dfs(pNodes, p, "O")
+        dfs(qNodes, q, "O")
+
+        return pNodes == qNodes
+        
