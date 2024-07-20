@@ -1,0 +1,22 @@
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+
+        H = len(grid)
+        W = len(grid[0])
+        visited = grid.copy()
+        maxArea = 0
+
+        def visit(r, c):
+            if r < 0 or r > H -1 or c < 0 or c > W - 1 or visited[r][c] == -1 or grid[r][c] == 0:
+                return 0
+            else:
+                visited[r][c] = -1
+                return 1 + visit(r - 1, c) + visit(r + 1, c) + visit(r, c - 1) + visit(r, c + 1)
+
+        for r in range(H):
+            for c in range(W):
+                if visited[r][c] != -1:
+                    islandArea = visit(r, c)
+                    maxArea = max(maxArea, islandArea)
+
+        return maxArea
