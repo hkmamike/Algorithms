@@ -1,0 +1,47 @@
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        
+        time = 0
+        H = len(grid)
+        W = len(grid[0])
+
+
+        def countFresh(grid):
+            cnt = 0
+            for r in range(H):
+                for c in range(W):
+                    if grid[r][c] == 1:
+                        cnt += 1
+            return cnt
+
+        def runOneRound(grid):
+            def rotNeighbor(r, c):
+                if r < 0 or r >= H or c < 0 or c >= W:
+                    return
+                if grid[r][c] == 0 or grid[r][c] == 2 or grid[r][c] == -2:
+                    return
+                if grid[r][c] == 1:
+                    self.rottenThisRound += 1
+                    grid[r][c] = -2
+
+            for r in range(H):
+                for c in range(W):
+                    if grid[r][c] == 2:
+                        rotNeighbor(r - 1, c)
+                        rotNeighbor(r + 1, c)
+                        rotNeighbor(r, c - 1)
+                        rotNeighbor(r, c + 1)
+            for r in range(H):
+                for c in range(W):
+                    grid[r][c] = abs(grid[r][c])
+
+        while True:
+            self.rottenThisRound = 0
+            freshOrangeCnt = countFresh(grid)
+            if freshOrangeCnt == 0:
+                return time
+
+            time += 1
+            runOneRound(grid)
+            if self.rottenThisRound == 0:
+                return -1
