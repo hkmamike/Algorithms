@@ -1,0 +1,28 @@
+class WordDictionary:
+
+    def __init__(self):
+        self.root = {}
+
+    def addWord(self, word: str) -> None:
+        node = self.root
+        for c in word + "$":
+            node = node.setdefault(c, {})
+
+    def search(self, word: str) -> bool:
+        def searchFrom(word, node):
+            if len(word) == 1 and word[0] == "$" and "$" in node:
+                return True
+            if word[0] not in node and word[0] != ".":
+                return False
+
+            boolCharIsWildCard = (word[0] == ".") and any([searchFrom(word[1:], node[key]) for key in node])
+            boolCharInNode = (word[0] in node) and searchFrom(word[1:], node[word[0]])
+            return boolCharIsWildCard or boolCharInNode
+        
+        return searchFrom(word+"$", self.root)
+
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
