@@ -1,0 +1,14 @@
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        self.result = []
+
+        def recurse(path, idx):
+            if idx == len(nums):
+                self.result.append(path)
+            else:
+                newPath = path.copy()
+                recurse(newPath+[nums[idx]], idx+1)
+                recurse(newPath, idx+1)
+
+        recurse([], 0)
+        return self.result
