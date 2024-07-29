@@ -1,3 +1,21 @@
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        self.result = []
+        def recurse(subTarget, candidates, attempt, idx):
+            if subTarget < 0:
+                return
+            elif subTarget == 0:
+                self.result.append(attempt)
+            else:
+                for i in range(idx, len(candidates)):
+                    newTarget = subTarget - candidates[i]
+                    newAttempt = attempt + [candidates[i]]
+                    recurse(newTarget, candidates, newAttempt, i)
+        
+        recurse(target, candidates, [], 0)
+        return self.result
+
 class Solution:
     
     resultsList = []
