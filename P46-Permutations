@@ -1,0 +1,18 @@
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        N = len(nums)
+        self.result = []
+
+        def buildCandidate(candidate, mask, nums, N):
+            if sum(mask) == N:
+                self.result.append(candidate)
+            for i in range(N):
+                if mask[i] == 0:
+                    newMask = mask.copy()
+                    newMask[i] = 1
+                    newCandidate = candidate.copy() + [nums[i]]
+                    buildCandidate(newCandidate, newMask, nums, N)
+
+        mask = [0] * N
+        buildCandidate([], mask, nums, N)
+        return self.result
