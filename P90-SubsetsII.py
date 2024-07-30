@@ -1,4 +1,23 @@
 class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        self.result = []
+        self.added = set()
+
+        def buildCandidates(candidate, idx, nums):
+            if idx == len(nums):
+                candidateTuple = tuple(sorted(candidate))
+                if candidateTuple not in self.added:
+                    self.added.add(candidateTuple)
+                    self.result.append(candidate)
+            else:
+                newCandidate = candidate.copy() + [nums[idx]]
+                buildCandidates(candidate, idx + 1, nums)
+                buildCandidates(newCandidate, idx + 1, nums)
+
+        buildCandidates([], 0, nums)
+        return self.result
+
+class Solution:
 
     results = []
     
