@@ -63,6 +63,13 @@ def rotate(self, matrix):
         for i, row in enumerate(matrix):
             matrix[i] = row[::-1]
 
+
+## grid move
+def move(r, c):
+    for (i, j) in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+        if 0 <= r+i < len(grid) and 0 <= c+1 < len(grid[0]):
+            yield (r+i, c+j)
+
 ## union-find
 def find(node):
     if rootMap[node] == -1:
