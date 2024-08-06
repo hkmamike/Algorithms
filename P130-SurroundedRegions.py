@@ -1,3 +1,40 @@
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        def onEdge(r, c, H, W):
+            return r == 0 or r == H-1 or c == 0 or c == W-1
+
+        def move(r, c, H, W):
+                for (i, j) in [(1,0), (-1,0), (0,1), (0,-1)]:
+                    if 0 <= r+i < H and 0 <= c+j < W:
+                        yield (r+i, c+j)
+            
+        def visit(r, c, board, H, W):
+            if board[r][c] == "O":
+                board[r][c] = "E"
+                for (R, C) in move(r, c, H, W):
+                    visit(R, C, board, H, W)
+
+        H = len(board)
+        W = len(board[0])
+        
+        for r in range(H):
+            for c in range(W):
+                if onEdge(r, c, H, W) and board[r][c] == "O":
+                    visit(r, c, board, H, W)
+        
+        for r in range(H):
+            for c in range(W):
+                if board[r][c] == "O":
+                    board[r][c] = "X"
+                elif board[r][c] == "E":
+                    board[r][c] = "O"
+
+
+
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         """
