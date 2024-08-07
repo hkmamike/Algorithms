@@ -1,3 +1,32 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return None
+        nodesMap = {}
+        nodesMap[node] = Node(node.val, [])
+        nodesStack = [node]
+
+        while nodesStack:
+            nextNode = nodesStack.pop()
+            
+            for entry in nextNode.neighbors:
+                if entry not in nodesMap:
+                    nodesMap[entry] = Node(entry.val, [])
+                    nodesStack.append(entry)
+                nodesMap[nextNode].neighbors.append(nodesMap[entry])
+
+        return nodesMap[node]
+
+
+
 # Definition for a undirected graph node
 # class UndirectedGraphNode:
 #     def __init__(self, x):
