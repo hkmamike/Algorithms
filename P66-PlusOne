@@ -1,0 +1,19 @@
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        digits = [0] + digits
+
+        idx = len(digits)-1
+        carry = 1
+        while carry != 0:
+            carryTotal = digits[idx] + carry
+            digits[idx] = carryTotal % 10
+            if carryTotal >= 10:
+                carry = 1
+            else:
+                carry = 0
+            idx -= 1
+        
+        if digits[0] == 0:
+            digits = digits[1:]
+        
+        return digits
