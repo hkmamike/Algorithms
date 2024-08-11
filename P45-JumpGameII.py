@@ -1,4 +1,25 @@
 class Solution:
+    def jump(self, nums: List[int]) -> int:
+        pos = 0
+        quota = nums[0]
+        jumps = 0
+
+        while pos < len(nums) - 1 and quota > 0:
+            if pos + quota >= len(nums) - 1:
+                return jumps + 1
+            champion = nums[pos + quota]
+            nextPos = pos + quota
+            for i in range(pos+1, pos+quota+1):
+                challenger = i + nums[i]
+                if challenger >= champion:
+                    champion = challenger
+                    nextPos = i
+            pos = nextPos
+            jumps += 1
+            quota = nums[nextPos]
+        return jumps
+
+class Solution:
     def jump(self, nums):
         """
         :type nums: List[int]
