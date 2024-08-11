@@ -1,3 +1,21 @@
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        
+        N = len(gas)
+        surplus = [gas[i] - cost[i] for i in range(N)]
+        if sum(surplus) < 0:
+            return -1
+        
+        startIdx, tank = 0, 0
+        for i in range(N):
+            tank += surplus[i]
+
+            if tank < 0:
+                tank = 0
+                startIdx = i+1
+        
+        return startIdx
+
 class Solution(object):
     def canCompleteCircuit(self, gas, cost):
         """
