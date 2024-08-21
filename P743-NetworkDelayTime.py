@@ -1,4 +1,39 @@
 class Solution:
+    def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        
+        def setInfiniteTime():
+            return float('inf')
+
+        edgeMap = defaultdict(list)
+        for entry in times:
+            edgeMap[entry[0]].append((entry[1], entry[2]))
+
+        reachedSet = set()
+        processedSet = set()
+        reachEvents = [(0, k)]
+        arrivalTime = defaultdict(setInfiniteTime)
+
+        while len(reachEvents) > 0 and len(reachedSet) <= n:
+            loopNoOp = True
+            currentTime, nodeAdded = heapq.heappop(reachEvents)
+            reachedSet.add(nodeAdded)
+            arrivalTime[nodeAdded] = min(currentTime, arrivalTime[nodeAdded])
+
+            if nodeAdded in processedSet:
+                continue
+
+            for edge in edgeMap[nodeAdded]:
+                eta = currentTime + edge[1]
+                dest = edge[0]
+                heapq.heappush(reachEvents, (eta, dest))
+            processedSet.add(nodeAdded)
+
+        maxTime =  max([value for key, value in arrivalTime.items()])
+        return maxTime if len(reachedSet) == n else -1
+
+
+
+class Solution:
     def networkDelayTime(self, times, N, K):
         """
         :type times: List[List[int]]
