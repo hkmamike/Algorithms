@@ -2,7 +2,6 @@ class Solution:
     def maxPossibleScore(self, start: List[int], d: int) -> int:
 
         start.sort()
-
         def check(score):
             pre = -10**10
             for l in start:
