@@ -309,7 +309,7 @@ def divide(self, y, x):
     return min(max(result, -2147483648), 2147483647)
 
 
-### Segment Tree Implementation ###
+### Segment Tree Implementation, P152,  ###
 
 # Segment tree node
 class Node(object):

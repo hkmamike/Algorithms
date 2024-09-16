@@ -8,3 +8,4 @@ class Solution:
             bestAt[i] = bestLeft + 1
         
         return max(bestAt)
+ 
