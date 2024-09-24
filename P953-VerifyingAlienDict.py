@@ -1,4 +1,17 @@
 class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+
+        translatedWords = []
+        for w in words:
+            candidate = ""
+            for c in w:
+                normalOrd = order.index(c)
+                candidate += chr(ord("a") + normalOrd)
+            translatedWords.append(candidate)
+        
+        return sorted(translatedWords) == translatedWords
+
+class Solution:
     def isAlienSorted(self, words, order):
         """
         :type words: List[str]
