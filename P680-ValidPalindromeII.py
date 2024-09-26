@@ -3,7 +3,6 @@ class Solution:
     def validPalindrome(self, s: str) -> bool:
         if len(s) <= 2:
             return True
-    
         def recurse(s, L, R, budget):
             if L >= R:
                 return True
