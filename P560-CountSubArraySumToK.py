@@ -1,3 +1,21 @@
+# practice on optimal solution - Sep 26
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        cumSum, result = 0, 0
+        numSubarrayWithSum = {}
+        for i, n in enumerate(nums):
+            cumSum += n
+
+            if cumSum == k:
+                result += 1
+            if cumSum - k in numSubarrayWithSum:
+                result += numSubarrayWithSum[cumSum - k]
+            if cumSum in numSubarrayWithSum:
+                numSubarrayWithSum[cumSum] += 1
+            else:
+                numSubarrayWithSum[cumSum] = 1
+        return result
+
 class Solution:
     def subarraySum(self, nums, k):
         """
