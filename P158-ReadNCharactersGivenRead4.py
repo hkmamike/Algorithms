@@ -6,7 +6,6 @@ you can call Reader.read4(buf)
 """
 
 class Solution:
-
     def __init__(self):
         self.storage = 0
         self.fileDone = False
