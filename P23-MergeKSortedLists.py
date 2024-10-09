@@ -4,8 +4,26 @@
 #         self.val = x
 #         self.next = None
 
-from queue import PriorityQueue
+# Optimal Solution
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        origin = head = ListNode(None)
+        h = []
+        for i, node in enumerate(lists):
+            if node:
+                heapq.heappush(h, (node.val, i, node))
+        
+        while h:
+            nodeVal, idx, node = heappop(h)
+            head.next = node
+            node = node.next
+            head = head.next
+            if node:
+                heapq.heappush(h, (node.val, idx, node))
+        
+        return origin.next
 
+from queue import PriorityQueue
 class Solution:
     def mergeKLists(self, lists):
 
