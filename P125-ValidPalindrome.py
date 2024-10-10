@@ -1,3 +1,13 @@
+# Oct 2024, cleaner, same big O but less efficient
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+
+        lowerS = s.lower()
+        lowerSAlpha = "".join([c for c in lowerS if c.isalnum()])
+        return lowerSAlpha == lowerSAlpha[::-1]
+
+
+
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         cleanedS = ''.join([c for c in s if c.isalnum()])
