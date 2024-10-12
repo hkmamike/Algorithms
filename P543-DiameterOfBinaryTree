@@ -4,6 +4,22 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+            self.maxD = 0
+            def dfs(node):
+                if node:
+                    L = dfs(node.left)
+                    R = dfs(node.right)
+                    self.maxD = max(self.maxD, L + R + 1)
+                    return max(L+1, R+1)
+                else:
+                    return 0
+            dfs(root)
+            return self.maxD - 1
+
+
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
 
