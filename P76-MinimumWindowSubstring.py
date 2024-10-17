@@ -18,3 +18,28 @@ class Solution:
                     I, J = i, j
                     
         return s[I:J]
+    
+# simple solution
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        targetC = Counter(t)
+
+        L, R, minLength = 0, 0, float('inf')
+        result = ""
+        C = Counter(s[0])
+
+        while L < len(s):
+            if C >= targetC:
+                if R - L + 1 < minLength:
+                    minLength = R - L + 1
+                    result = s[L:R+1]
+                C[s[L]] -= 1
+                L += 1
+            elif R < len(s) - 1:
+                R += 1
+                C[s[R]] += 1
+            else:
+                break
+
+        return result
+
