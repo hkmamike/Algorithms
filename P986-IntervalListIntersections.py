@@ -3,6 +3,31 @@
 #     def __init__(self, s=0, e=0):
 #         self.start = s
 #         self.end = e
+class Solution:
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        h = []
+
+        for entry in firstList:
+            heappush(h, entry)
+        for entry in secondList:
+            heappush(h, entry)
+
+        currentJob = heappop(h)
+        currentEnd = currentJob[1]
+        result = []
+
+        while h:
+            entry = heappop(h)
+            if entry[0] > currentEnd:
+                currentEnd = entry[1]
+
+            elif entry[1] > currentEnd:
+                result.append([entry[0], currentEnd])
+                currentEnd = entry[1]
+            else:
+                result.append([entry[0], entry[1]])
+        
+        return result
 
 class Solution(object):
     def intervalIntersection(self, A, B):
