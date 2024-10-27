@@ -4,6 +4,18 @@
 #         self.val = x
 #         self.left = None
 #         self.right = None
+class Solution:
+    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
+        self.result = 0
+
+        def dfs(node):
+            if node:
+                dfs(node.left)
+                dfs(node.right)
+                if low <= node.val <= high:
+                    self.result += node.val
+        dfs(root)
+        return self.result
 
 class Solution:
     def rangeSumBST(self, root: 'TreeNode', L: 'int', R: 'int') -> 'int':

@@ -1,3 +1,25 @@
+# Oct 20, 2024
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        if len(height) <= 2:
+            return 0
+
+        maxFromL = [height[0]]
+        maxFromR = [0] * len(height)
+        maxFromR[-1] = height[-1]
+        for i in range(1, len(height)):
+            maxFromL.append(max(maxFromL[i-1], height[i]))
+        for i in range(len(height)-2, -1, -1):
+            maxFromR[i] = max(maxFromR[i+1], height[i])
+
+        volume = 0
+        for i in range(1, len(height)-1):
+            waterLevel = min(maxFromL[i-1], maxFromR[i+1])
+            depth = max(0, waterLevel - height[i])
+            volume += depth
+        return volume
+
+
 # easier to understand
 class Solution:
     def trap(self, height):

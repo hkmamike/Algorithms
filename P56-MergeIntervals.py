@@ -5,6 +5,23 @@
 #         self.end = e
 
 class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort()
+        result = [intervals[0]]
+        for i, entry in enumerate(intervals):
+            if i == 0: continue
+
+            if entry[0] <= result[-1][1]:
+                start = result[-1][0]
+                end = max(entry[1], result[-1][1])
+                result.pop()
+                result.append([start, end])
+            else:
+                result.append(entry)
+
+        return result
+
+class Solution:
     def merge(self, intervals):
         
         if not intervals:
