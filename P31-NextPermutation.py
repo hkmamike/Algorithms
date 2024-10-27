@@ -1,3 +1,43 @@
+# Oct 23, 2024, needed hint
+class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) <= 1:
+            return
+
+        # find pivot (first drop in value from back)
+        def findPivot(nums):
+            for i in range(len(nums)-2, -1, -1):
+                if nums[i] < nums[i+1]:
+                    return i
+            return -1
+        
+        # find swap value (first value from back bigger than pivot)
+        def findSwap(nums, pivotIdx):
+            for i in range(len(nums)-1, pivotIdx, -1):
+                if nums[i] > nums[pivotIdx]:
+                    return i
+    
+        pivotIdx = findPivot(nums)
+        if pivotIdx == -1:
+            nums.reverse()
+            return
+
+        swapIdx = findSwap(nums, pivotIdx)
+
+        # swap
+        nums[swapIdx], nums[pivotIdx] = nums[pivotIdx], nums[swapIdx]
+
+        # swap everything on the right of pivot index
+        L, R = pivotIdx+1, len(nums)-1
+        while L < R:
+            nums[L], nums[R] = nums[R], nums[L]
+            L += 1
+            R -= 1
+
+
 class Solution:
     def nextPermutation(self, nums):
         """
