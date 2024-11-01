@@ -5,6 +5,28 @@ class Node:
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
 """
+# Oct 31, 2024 - had to reference template
+from typing import Optional
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+        if not node:
+            return None
+        
+        M = {}
+        M[node] = Node(node.val, [])
+        stack = [node]
+
+        while stack:
+            nextNode = stack.pop()
+            for neighbor in nextNode.neighbors:
+                if neighbor not in M:
+                    M[neighbor] = Node(neighbor.val, [])
+                    stack.append(neighbor)
+                M[nextNode].neighbors.append(M[neighbor])
+
+        return M[node]
+
+
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
