@@ -1,4 +1,16 @@
 class Solution:
+    def isMonotonic(self, nums: List[int]) -> bool:
+        N = len(nums)
+        if N <= 2:
+            return True
+
+        diff = []
+        for i in range(1, N):
+            diff.append(nums[i] - nums[i-1])
+        
+        return all([x >= 0 for x in diff]) or all([x <= 0 for x in diff])
+
+class Solution:
     def isMonotonic(self, A):
         """
         :type A: List[int]
