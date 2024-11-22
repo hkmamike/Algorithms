@@ -1,3 +1,21 @@
+# Nov 21, 2024. Couldn't get the efficient solution without reference
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        L, R = 0, len(height) - 1
+        safeHeight = 0
+        total = 0
+
+        while L < R:
+            lower = min(height[L], height[R])
+            safeHeight = max(safeHeight, lower)
+            total += safeHeight - lower
+            
+            if height[L] <= height[R]:
+                L += 1
+            else:
+                R -= 1
+        return total
+
 # Oct 20, 2024
 class Solution:
     def trap(self, height: List[int]) -> int:
